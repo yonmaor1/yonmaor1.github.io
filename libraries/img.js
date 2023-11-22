@@ -1,8 +1,9 @@
-function makeImg(url, iname, iw, ih) {
+function makeImg(url, itext, iw, ih) {
     let img = {
-        img: url, name: iname,
+        img: url, text: itext,
         w: iw, h: ih,
         mouseOver: false,
+        clicked: false,
         draw: draw_image,
     }
 
@@ -11,13 +12,35 @@ function makeImg(url, iname, iw, ih) {
 
 function draw_image() {
 
-    image(this.img, 0, 0, this.w, this.h);
+    if (this.img.height > this.img.width) {
+        let ratio = this.img.height / this.img.width;
+        image(this.img, 0, 0, this.w, ratio * this.w);
+        fill('white');
+        rect(0, this.h, this.w, this.h);
+    } else {
+        let ratio = this.img.width / this.img.height;
+        image(this.img, 0, 0, ratio * this.h, this.h);
+        fill('white');
+        rect(this.w, 0, this.w, this.h);
+    }
+    
+
+    textSize(14);
+    rectMode(CORNER);
 
     if (this.mouseOver) {
-        fill(100, 100);
-        rect(w/2, h/2, w, h);
+        fill(100, 200);
+        rect(0, 0, this.w, this.h);
 
-        text(this.name, w/2, h/2);
+        fill('white');
+        textAlign(CENTER);
+        for (let i = 0; i < this.text.length; i++){
+            text(this.text[i], 0, this.h/2 - 15 + 32 * i, this.w, this.h);
+        }
+        
     }
+
+    rectMode(CORNER)
+
 
 }

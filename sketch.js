@@ -19,21 +19,17 @@ let corner = -1;
 
 let scroll = 0;
 
-let three_d_links = ['assets/3d/boat.JPG', 'assets/3d/forYou.jpg', 'assets/3d/soundbox.jpg', 'assets/3d/walkInTheForest.JPG', 'assets/3d/thisBox.jpg', 'assets/3d/waves.jpg'];
-let two_d_links = ['assets/2d/qqq.PNG', 'assets/2d/cabinetDoor.PNG', 'assets/2d/twoCabinets.PNG', 'assets/2d/minimalistKitchen.JPG', 'assets/2d/chrisBoard.jpg'];
-let electronic_links = ['assets/electronic/noisySquares.png', 'assets/electronic/chimes.gif', 'assets/electronic/circuit.png', 'assets/electronic/selfPortrait.jpg', 'assets/electronic/scales.png'];
-
 let three_d = [];
 let two_d = [];
 let electronic = [];
 
 function preload() {
   for (let i = 0; i < three_d_links.length; i++) {
-    three_d[i] = makeImg(loadImage(three_d_links[i]), '', 200, 200);
+    three_d[i] = makeImg(loadImage(three_d_links[i]), three_d_names[i], 200, 200);
   } for (let i = 0; i < two_d_links.length; i++) {
-    two_d[i] = makeImg(loadImage(two_d_links[i]), '', 200, 200);
+    two_d[i] = makeImg(loadImage(two_d_links[i]), two_d_names[i], 200, 200);
   } for (let i = 0; i < electronic_links.length; i++) {
-    electronic[i] = makeImg(loadImage(electronic_links[i]), '', 200, 200);
+    electronic[i] = makeImg(loadImage(electronic_links[i]), electronic_names[i], 200, 200);
   }
 }
 
@@ -304,20 +300,18 @@ function art(){
   rectMode(CORNER);
   textSize(28);
   
-  push();
-  translate(margin, H + 5*margin - scroll);
-  text("3d", 0, 20);
-  imageGrid(three_d, 0, 30);
+  let firstY = H + 5*margin - scroll + 20
+  text("3d", margin, firstY);
+  imageGrid(three_d, margin, firstY + 10);
 
-  translate(0, 80 + three_d[0].h * ceil(three_d.length / 3));
-  text("2d", 0, 20);
-  imageGrid(two_d, 0, 30);
+  let secondY = firstY + 80 + three_d[0].h * ceil(three_d.length / 3);
+  text("2d", margin, secondY);
+  imageGrid(two_d, margin, secondY + 10);
 
-  translate(0, 80 + two_d[0].h * ceil(two_d.length / 3));
-  text("electronic", 0, 0);
-  imageGrid(electronic, 0, 30);
+  let thirdY = secondY + 80 + two_d[0].h * ceil(two_d.length / 3);
+  text("electronic", margin, thirdY);
+  imageGrid(electronic, margin, thirdY + 10);
 
-  pop();
 
   fill('white');
   stroke('black');
@@ -349,8 +343,22 @@ function imageGrid(images, x, y) {
   for (let i = 0; i < images.length; i++) {
     push();
 
-    translate((images[i].w + margin) * (i % 3), (images[i].h + margin) * floor(i / 3));
+    let relX = (images[i].w + margin) * (i % 3);
+    let relY = (images[i].h + margin) * floor(i / 3);
+
+    let absX = x + relX;
+    let absY = y + relY;
+
+    translate(relX, relY);
     images[i].draw();
+
+    if (absX <= mouseX && mouseX <= absX + images[i].w && 
+        absY <= mouseY && mouseY <= absY + images[i].h){
+      images[i].mouseOver = true;
+      print(i)
+    } else {
+      images[i].mouseOver = false;
+    }
 
     pop();
   }
@@ -361,7 +369,8 @@ function imageGrid(images, x, y) {
 function mouseWheel(event) {
   scroll += event.delta;
 
-  if (corner == 1) scroll = constrain(scroll, 0, 6 * two_d[0].h);
+  let maxScroll = (ceil(three_d.length/3) + ceil(two_d.length/3) + ceil(electronic.length/3)) * two_d[0].h
+  if (corner == 1) scroll = constrain(scroll, 0, maxScroll);
 
   return false;
 }
