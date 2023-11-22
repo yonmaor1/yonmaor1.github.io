@@ -63,6 +63,13 @@ function draw() {
 
   drawCard(X, Y, W, H, margin, C);
 
+  if (cardX - W/2 - margin <= mouseX && mouseX <= cardX + W/2 + margin &&
+      cardY - H/2 - margin <= mouseY && mouseY <= cardY + H/2 + margin){
+    cursor('grab');
+  } else {
+    cursor('default');
+  }
+
   if (mouseIsPressed && dragging) {
 
     dx = mouseX - mouseX_hold;
@@ -244,7 +251,6 @@ function mousePressed() {
 
   if (cardX - W/2 - margin <= mouseX && mouseX <= cardX + W/2 + margin &&
       cardY - H/2 - margin <= mouseY && mouseY <= cardY + H/2 + margin){
-    
     dragging = true;
 
     holdX = cardX;
