@@ -252,6 +252,12 @@ function mousePressed() {
 
     mouseX_hold = mouseX;
     mouseY_hold = mouseY;
+  } else if (activeButton != '') {
+    if (activeButton == 'resume') window.open('', '_blank'); // DONT WORK
+    else if (activeButton == 'ig') window.open('https://www.instagram.com/yonmaort/', '_blank');
+    else if (activeButton == 'git') window.open('https://github.com/yonmaor1', '_blank');
+    else if (activeButton == 'twitter') window.open('https://twitter.com/yonmaor', '_blank');
+    else if (activeButton == 'k67') window.open('https://en.wikipedia.org/wiki/K67_kiosk', '_blank');
   }
 }
 
@@ -285,6 +291,33 @@ function about(){
 
   textSize(18);
   text("instagram    github    twitter    K67", 0, 310);
+  let iw = textWidth('instagram');
+  let gw = textWidth('github');
+  let tw = textWidth('twitter');
+  let kw = textWidth('K67');
+  let space = textWidth('    ');
+
+  stroke('black');
+
+  if (H + 5*margin + 310 - 18 <= mouseY && mouseY <= H + 5*margin + 310) {
+    if (W + 2.5*margin <= mouseX && mouseX <= W + 2.5*margin + iw) { // ig button
+      line(0, 312, iw, 312);
+      activeButton = 'ig';
+    } else if (W + 2.5*margin + iw + space <= mouseX && mouseX <= W + 2.5*margin + iw + space + gw) { // git button
+      line(iw + space, 312, iw + space + gw, 312);
+      activeButton = 'git';
+    } else if (W + 2.5*margin + iw + space + gw + space <= mouseX && mouseX <= W + 2.5*margin + iw + space + gw + space + tw) { // twitter button
+      line(iw + space + gw + space, 312, iw + space + gw + space + tw, 312);
+      activeButton = 'twitter';
+    } else if (W + 2.5*margin + iw + space + gw + space + tw + space <= mouseX && mouseX <= W + 2.5*margin + iw + space + gw + space + tw + space + kw) { // k64 button
+      line(iw + space + gw + space + tw + space, 312, iw + space + gw + space + tw + space + kw, 312);
+      activeButton = 'k67';
+    } else {
+      activeButton = '';
+    }
+  }
+
+  noStroke();
 
   textSize(22);
   text("currently reading", 0, 360);

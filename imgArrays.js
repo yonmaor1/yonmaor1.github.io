@@ -51,7 +51,7 @@ let two_d_names = [
 ];
 
 let electronic_links = [
-    'assets/electronic/noisySquares.png', 
+    'assets/electronic/noisySquare.png', 
     'assets/electronic/chimes.gif', 
     'assets/electronic/circuit.png', 
     'assets/electronic/selfPortrait.jpg', 
@@ -61,7 +61,7 @@ let electronic_links = [
 ];
 
 let electronic_names = [
-    ['Noisy Squares', 'p5 sketch'], 
+    ['Noisy Square', 'p5 sketch'], 
     ['Chimes', 'Grasshopper Data Visualization'], 
     ['Circuit', 'p5 sketch'], 
     ['Self Portrait', 'p5 Sketch'], 
