@@ -321,6 +321,8 @@ function about(){
     } else {
       activeButton = '';
     }
+  } else {
+    activeButton = '';
   }
 
   noStroke();
