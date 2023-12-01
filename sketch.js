@@ -19,11 +19,15 @@ let corner = -1;
 
 let scroll = 0;
 
+let me;
+let showMe = false;
+
 let three_d = [];
 let two_d = [];
 let electronic = [];
 
 function preload() {
+  me = loadImage('assets/me.jpg');
   for (let i = 0; i < three_d_links.length; i++) {
     three_d[i] = makeImg(loadImage(three_d_links[i]), three_d_names[i], 200, 200);
   } for (let i = 0; i < two_d_links.length; i++) {
@@ -135,12 +139,13 @@ function draw() {
       art();
       break;
     case (2): // bottom right --> design
-      design();
-      break;
-    case (3): // bottom left --> research? engineering? 
       work();
       break;
+    case (3): // bottom left --> research? engineering? 
+      design();
+      break;
     default:
+      scroll = 0;
       break;
   }
 
@@ -283,11 +288,18 @@ function about(){
 
   text('about me', 0, 0);
 
-  pop();
+  pop(); /* * */
+
 
   push();
   translate(W + 2.5*margin, H + 5*margin);
   text("hello! my name is yon. i'm a third year studying electrical/computer engineering and art at carnegie mellon university.", 0, 0, width - W - 2*margin);
+  if (!showMe && 820 < mouseX && mouseX < 900 && 245 < mouseY && mouseY < 275) {
+    showMe = true;
+    print(showMe);
+  } if (860 - 100 > mouseX || mouseX > 860 + 100 || 260 - 100 > mouseY || mouseY > 260 + 100) {
+    showMe = false;
+  }
 
   textSize(22);
   text("i specialize in signals & systems. my research areas are in GUI design and interactivity in technical education.", 0, 120, width - W - 2*margin);
@@ -333,6 +345,20 @@ function about(){
   text("the Modern Prince and Other Writings, Antonio Gramci", 0, 390);
 
   pop();
+
+  if (showMe) {
+    let meX = 860 - 100;
+    let meY = 260 - 100;
+
+    meX -= (mouseX - meX)/10;
+    meY -= (mouseY - meY)/10;
+
+    image(me, meX, meY, 200, 200);
+    stroke('black');
+    noFill();
+    rect(meX, meY, 200, 200);
+  }
+
 }
 
 function art(){
@@ -370,10 +396,69 @@ function art(){
 }
 
 function design() {
+  
+  push();
 
+  textSize(28);
+  textAlign(LEFT, TOP);
+  rectMode(CORNER);
+  noStroke();
+
+  push();
+  translate(W + 2.5*margin, margin - scroll);
+
+  text("i'm not a designer, but for whatever reason some people trust me to design them things...", 0, 0, width - W - 2*margin);
+
+  text("web", 0, 100);
+
+  pop();
+
+  push(); /** header and scroll mask (must draw LAST) */
+  translate(W + 2*margin, height - H - 2*margin);
+
+  stroke('black');
+  fill('white');
+  rect(0, 0, width - W, H + 2*margin);
+
+  noStroke();
+  fill('black');
+  text('design', margin/2, margin/2);
+
+  pop();
+
+  pop();
 }
 
 function work() {
+
+  push();
+
+  textSize(28);
+  textAlign(LEFT, TOP);
+  rectMode(CORNER);
+  noStroke();
+
+  push();
+  translate(0.5*margin, margin - scroll);
+
+  text("my technical work and research span across several fields, particularily education, automation and GUI engineering, robotics, and control", 0, 0, width - W - 2*margin);
+
+  pop();
+
+  push(); /** header and scroll mask (must draw LAST) */
+  translate(0, height - H - 2*margin);
+
+  stroke('black');
+  fill('white');
+  rect(0, 0, width - W - 2*margin, H + 2*margin);
+
+  noStroke();
+  fill('black');
+  text('work', margin/2, margin/2);
+
+  pop();
+
+  pop();
 
 }
 
@@ -412,6 +497,8 @@ function mouseWheel(event) {
 
   let maxScroll = (ceil(three_d.length/3) + ceil(two_d.length/3) + ceil(electronic.length/3)) * two_d[0].h
   if (corner == 1) scroll = constrain(scroll, 0, maxScroll);
+  if (corner == 2) scroll = constrain(scroll, 0, maxScroll);
+  if (corner == 3) scroll = constrain(scroll, 0, maxScroll);
 
   return false;
 }
