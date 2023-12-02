@@ -25,6 +25,7 @@ let showMe = false;
 let three_d = [];
 let two_d = [];
 let electronic = [];
+let art_images = [three_d, two_d, electronic]; // for looping through to determine if an images is clicked
 
 function preload() {
   me = loadImage('assets/me.jpg');
@@ -252,30 +253,6 @@ function draw_x(x, y, w){
   pop();
 }
 
-function mousePressed() {
-
-  if (cardX - W/2 - margin <= mouseX && mouseX <= cardX + W/2 + margin &&
-      cardY - H/2 - margin <= mouseY && mouseY <= cardY + H/2 + margin){
-    dragging = true;
-
-    holdX = cardX;
-    holdY = cardY;
-
-    mouseX_hold = mouseX;
-    mouseY_hold = mouseY;
-  } else if (activeButton != '') {
-    if (activeButton == 'resume') window.open('', '_blank'); // DONT WORK
-    else if (activeButton == 'ig') window.open('https://www.instagram.com/yonmaort/', '_blank');
-    else if (activeButton == 'git') window.open('https://github.com/yonmaor1', '_blank');
-    else if (activeButton == 'twitter') window.open('https://twitter.com/yonmaor', '_blank');
-    else if (activeButton == 'k67') window.open('https://en.wikipedia.org/wiki/K67_kiosk', '_blank');
-  }
-}
-
-function mouseReleased() {
-  dragging = false;
-}
-
 /** subpages */
 function about(){
   fill('black');
@@ -491,6 +468,36 @@ function imageGrid(images, x, y) {
 
   pop();
 }
+
+/** EVENTS */
+
+function mousePressed() {
+
+  if (cardX - W/2 - margin <= mouseX && mouseX <= cardX + W/2 + margin &&
+      cardY - H/2 - margin <= mouseY && mouseY <= cardY + H/2 + margin){
+    dragging = true;
+
+    holdX = cardX;
+    holdY = cardY;
+
+    mouseX_hold = mouseX;
+    mouseY_hold = mouseY;
+  } else if (activeButton != '') {
+    if (activeButton == 'resume') window.open('', '_blank'); // DONT WORK
+    else if (activeButton == 'ig') window.open('https://www.instagram.com/yonmaort/', '_blank');
+    else if (activeButton == 'git') window.open('https://github.com/yonmaor1', '_blank');
+    else if (activeButton == 'twitter') window.open('https://twitter.com/yonmaor', '_blank');
+    else if (activeButton == 'k67') window.open('https://en.wikipedia.org/wiki/K67_kiosk', '_blank');
+  }
+
+
+  // check if image has been clicked
+}
+
+function mouseReleased() {
+  dragging = false;
+}
+
 
 function mouseWheel(event) {
   scroll += event.delta;
