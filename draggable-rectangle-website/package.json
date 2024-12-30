@@ -1,0 +1,23 @@
+{
+  "name": "draggable-rectangle-website",
+  "version": "1.0.0",
+  "description": "A website with a draggable rectangle that navigates to subpages when dragged to corners.",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "live-server src"
+  },
+  "keywords": [
+    "draggable",
+    "rectangle",
+    "navigation",
+    "html",
+    "css",
+    "javascript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}

@@ -1,0 +1,23 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+#draggable-rectangle {
+    width: 100px;
+    height: 100px;
+    background-color: #007bff;
+    position: absolute;
+    cursor: grab;
+    user-select: none;
+    transition: background-color 0.3s;
+}
+
+#draggable-rectangle:active {
+    cursor: grabbing;
+    background-color: #0056b3;
+}
