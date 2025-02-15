@@ -150,6 +150,10 @@ p5.prototype.rotateOnlyControl = function(sensitivityX, sensitivityY, sensitivit
   this._renderer._curCamera._orbit(0, 0, val * scaleFactor);
 
   if (this.mouseIsPressed) {
+    if (start_x > this.width || start_y > this.height || 
+      start_x < 0 || start_y < 0) {
+        return;
+    }
     // ORBIT BEHAVIOR
     if (this.mouseButton === this.LEFT) {
       const deltaTheta =
@@ -190,3 +194,13 @@ p5.prototype.rotateOnlyControl = function(sensitivityX, sensitivityY, sensitivit
   }
   return this;
 };
+
+function mousePressed() {
+  start_x = mouseX;
+  start_y = mouseY;
+}
+
+function mouseReleased() {
+  start_x = null;
+  start_y = null;
+}
