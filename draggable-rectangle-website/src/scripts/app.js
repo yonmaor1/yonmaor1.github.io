@@ -1,50 +1,110 @@
+let first_time = true;
+
 document.addEventListener('DOMContentLoaded', () => {
-    const draggableRectangle = document.getElementById('draggable-rectangle');
-    const contentContainer = document.getElementById('content-container');
 
-    draggableRectangle.addEventListener('mousedown', onMouseDown);
+    // load content for each corner
+    const ids = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+    ids.forEach(id => {
+        fetch(`pages/${id}.html`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById(id).innerHTML = data;
+                // document.getElementById(id).style.display = 'block';
+            })
+            .catch(error => console.error('Error fetching content:', error));
+    });
 
-    function onMouseDown(event) {
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
+    // lines
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // make rectangle draggable
+    const card = document.getElementById('draggable-rectangle');
+    draw_lines(ctx, card, canvas);
+
+    card.addEventListener('mousedown', on_mouse_down);
+
+    let rect_initial_x, rect_initial_y;
+    let mouse_initial_x, mouse_initial_y;
+    function on_mouse_down(event) {
+        mouse_initial_x = event.clientX;
+        mouse_initial_y = event.clientY;
+
+        rect_initial_x = card.offsetLeft;
+        rect_initial_y = card.offsetTop;
+
+        document.addEventListener('mousemove', on_mouse_move);
+        document.addEventListener('mouseup', on_mouse_up);
     }
 
-    function onMouseMove(event) {
-        const x = event.clientX;
-        const y = event.clientY;
-        draggableRectangle.style.left = `${x}px`;
-        draggableRectangle.style.top = `${y}px`;
-        checkCorners(x, y);
-    }
+    function on_mouse_move(event) {
+        const offset_x = event.clientX - mouse_initial_x;
+        const offset_y = event.clientY - mouse_initial_y;
 
-    function onMouseUp(event) {
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-    }
+        const x = constrain(rect_initial_x + offset_x, 0, window.innerWidth - card.offsetWidth);
+        const y = constrain(rect_initial_y + offset_y, 0, window.innerHeight - card.offsetHeight);
 
-    function checkCorners(x, y) {
-        const threshold = 20; // Distance from corner to trigger navigation
+        card.style.left = `${x}px`;
+        card.style.top = `${y}px`;
 
-        if (x <= threshold && y <= threshold) {
-            loadContent('top-left.html', 'top-left-content');
-        } else if (x >= window.innerWidth - threshold && y <= threshold) {
-            loadContent('top-right.html', 'top-right-content');
-        } else if (x <= threshold && y >= window.innerHeight - threshold) {
-            loadContent('bottom-left.html', 'bottom-left-content');
-        } else if (x >= window.innerWidth - threshold && y >= window.innerHeight - threshold) {
-            loadContent('bottom-right.html', 'bottom-right-content');
+        if (!check_corners(x, y)){
+            draw_lines(ctx, card, canvas);
+            remove_dark_mode();
+        } else {
+            clear_canvas(ctx, canvas.width, canvas.height);
+            set_dark_mode();
         }
     }
 
-    function loadContent(url, contentId) {
-        fetch(url)
-            .then(response => response.text())
-            .then(data => {
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = data;
-                const content = tempDiv.querySelector(`#${contentId}`).innerHTML;
-                contentContainer.innerHTML = content;
-            })
-            .catch(error => console.error('Error loading content:', error));
+    function on_mouse_up(event) { 
+        document.removeEventListener('mousemove', on_mouse_move);
+        document.removeEventListener('mouseup', on_mouse_up);
     }
+
+    // show / hide corners
+    function check_corners(x, y) {
+
+        const threshold = 1; // Distance from corner to trigger navigation
+
+        if (x <= threshold && y <= threshold) {
+            load_content('top-left');
+            return true;
+        } else if (x + card.offsetWidth >= window.innerWidth - threshold && y <= threshold) {
+            load_content('top-right');
+            return true;
+        } else if (x <= threshold && y + card.offsetHeight>= window.innerHeight - threshold) {
+            load_content('bottom-left');
+            return true;
+        } else if (x + card.offsetWidth >= window.innerWidth - threshold && y + card.offsetHeight >= window.innerHeight - threshold) {
+            load_content('bottom-right');
+            return true;
+        } else {
+            clear_content(ids);
+            return false;
+        }
+    }
+
+    clear_content(ids);
+
+});
+
+window.addEventListener('resize', () => {
+    const card = document.getElementById('draggable-rectangle');
+    const x = card.offsetLeft;
+    const y = card.offsetTop;
+
+    if (x + card.offsetWidth >= window.innerWidth) {
+        card.style.left = `${window.innerWidth - card.offsetWidth}px`;
+    } if (y + card.offsetHeight >= window.innerHeight) {
+        card.style.top = `${window.innerHeight - card.offsetHeight}px`;
+    }
+
+    const canvas = document.getElementById('canvas');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    draw_lines(canvas.getContext('2d'), card, canvas);
 });
