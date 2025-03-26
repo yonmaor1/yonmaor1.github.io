@@ -1,20 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yon maor</title>
 
-    <title>Yon Maor</title>
+    <!--styles-->
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/about.css">
+    <link rel="stylesheet" href="/styles/art.css">
 
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <!--fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://use.typekit.net/lsg3bee.css">
 
-    <script src="libraries/p5.min.js"></script>
-    <!-- <script src="libraries/p5.sound.min.js"></script> -->
-  </head>
+    <!--p5.js stuff-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.js"></script>
+    <script src="/card/pixelfont.js"></script>
+    <script src="/card/sketch.js"></script>
 
-  <body>
-    <script src="libraries/img.js"></script>
-    <script src="imgArrays.js"></script>
-    <script src="sketch.js"></script>
-  </body>
+    <!--scripts-->
+    <script src="/scripts/utils.js"></script>
+    <script src="/scripts/imgArrays.js"></script>
+    <script src="/scripts/app.js"></script>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <div id="draggable-rectangle" class="draggable">
+    </div>
+    <div id="content-container">
+        <div class="content hidden" id="top-left"></div>
+        <div class="content hidden" id="top-right"></div>
+        <div class="content hidden" id="bottom-left"></div>
+        <div class="content hidden" id="bottom-right"></div>
+    </div>
+</body>
 </html>

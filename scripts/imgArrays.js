@@ -1,15 +1,15 @@
 let three_d_links = [ 
-    'assets/3d/semel.png', 
-    'assets/3d/hearTheMovement.png', 
-    'assets/3d/boat.JPG', 
-    'assets/3d/redwoodPipe.JPG',
-    'assets/3d/lumbarPipe.JPG',
-    'assets/3d/dinnerTable.JPG',
-    'assets/3d/forYou.jpg', 
-    'assets/3d/soundbox.jpg', 
-    'assets/3d/walkInTheForest.JPG', 
-    'assets/3d/thisBox.jpg', 
-    'assets/3d/waves.jpg'
+    '/assets/3d/semel.png', 
+    '/assets/3d/hearTheMovement.png', 
+    '/assets/3d/boat.JPG', 
+    '/assets/3d/redwoodPipe.JPG',
+    '/assets/3d/lumbarPipe.JPG',
+    '/assets/3d/dinnerTable.JPG',
+    '/assets/3d/forYou.jpg', 
+    '/assets/3d/soundbox.jpg', 
+    '/assets/3d/walkInTheForest.JPG', 
+    '/assets/3d/thisBox.jpg', 
+    '/assets/3d/waves.jpg'
   ];
 
 let three_d_names = [
@@ -27,15 +27,15 @@ let three_d_names = [
 ];
 
 let two_d_links = [   
-    'assets/2d/cabinetDoor.PNG', 
-    'assets/2d/twoCabinets.PNG', 
-    'assets/2d/minimalistKitchen.JPG', 
-    'assets/2d/qqq.PNG', 
-    'assets/2d/theTeacherIs.png', 
-    'assets/2d/ec9.png', 
-    'assets/2d/ec10.png', 
-    'assets/2d/ec11.png', 
-    'assets/2d/chrisBoard.jpg'
+    '/assets/2d/cabinetDoor.PNG', 
+    '/assets/2d/twoCabinets.PNG', 
+    '/assets/2d/minimalistKitchen.JPG', 
+    '/assets/2d/qqq.PNG', 
+    '/assets/2d/theTeacherIs.png', 
+    '/assets/2d/ec9.png', 
+    '/assets/2d/ec10.png', 
+    '/assets/2d/ec11.png', 
+    '/assets/2d/chrisBoard.jpg'
 ];
 
 let two_d_names = [
@@ -51,13 +51,12 @@ let two_d_names = [
 ];
 
 let electronic_links = [
-    'assets/electronic/noisySquare.png', 
-    'assets/electronic/chimes.gif', 
-    'assets/electronic/circuit.png', 
-    'assets/electronic/selfPortrait.jpg', 
-    'assets/electronic/scales.png',
-    'assets/electronic/soundRandomness.gif'
-
+    '/assets/electronic/noisySquare.png', 
+    '/assets/electronic/chimes.gif', 
+    '/assets/electronic/circuit.png', 
+    '/assets/electronic/selfPortrait.jpg', 
+    '/assets/electronic/scales.png',
+    '/assets/electronic/soundRandomness.gif'
 ];
 
 let electronic_names = [

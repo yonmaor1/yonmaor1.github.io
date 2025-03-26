@@ -26,10 +26,20 @@ function clear_content(ids) {
 // dark mode
 function set_dark_mode() {
     document.body.classList.add('dark-mode');
+
+    const event = new CustomEvent('darkModeEnabled', {
+        detail: { enabled: true }
+    });
+    document.dispatchEvent(event);
 }
 
 function remove_dark_mode() {
     document.body.classList.remove('dark-mode');
+
+    const event = new CustomEvent('darkModeDisabled', {
+        detail: { enabled: true }
+    });
+    document.dispatchEvent(event);
 }
 
 // canvas

@@ -195,7 +195,7 @@ function pixelCurve(x, y, w, h, noiseParam, d, c){
   removeCrossSection(x, y, w, h, noiseParam, d, c);
 }
 
-function removeCrossSection(sx, sy, w, h, noiseZ, d, c){
+function removeCrossSection(sx, sy, w, h, noiseZ, d, c){ 
 
   // erase(0, 80);
   push();

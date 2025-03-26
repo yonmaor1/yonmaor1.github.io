@@ -3,63 +3,43 @@ let noiseY;
 let noiseParam = 0;
 let noiseStep = 0.1;
 
-let W = 500;
-let H = 200;
-let margin = 10;
+let W = 505;
+let H = 205;
+let margin = 5;
 let C = 1;
 
-let grid;
+let cardX, cardY;
+let holdX, holdY;
+let mouseX_hold, mouseY_hold;
+let dragging = false;
+let justSwitched = false;
 
-function make_grid(w, h, d){
-  let array = [];
-  for (let i = 0; i < w; i++){
-    for (let j = 0; j < h; j++){
-      array.push(true);
-    }
+let inCorner = false;
+let corner = -1;
+
+let cnv;
+
+document.addEventListener('darkModeEnabled', (event) => {
+  console.log('Dark mode enabled:', event.detail.enabled);
+
+  if (event.detail.enabled) {
+    C = 0;
   }
+});
 
-  let g = {
-    initial_array: array.slice(),
-    array: array,
-    width: w,
-    height: h,
-    cell_size: d,
-    draw: draw_grid,
-    flip_pixel: grid_flip_pixel,
-    reset: reset_grid,
+document.addEventListener('darkModeDisabled', (event) => {
+  console.log('Dark mode disabled:', event.detail.enabled);
+
+  if (event.detail.enabled) {
+    C = 1;  
   }
-
-  return g;
-}
-
-function reset_grid(){
-  this.array = this.initial_array.slice();
-}
-
-function draw_grid(){
-
-  fill('white')
-  noStroke();
-  for (let i = 0; i < this.width; i++){
-    for (let j = 0; j < this.height; j++){
-      if (this.array[i + j * this.width]){
-        rect(i * this.cell_size, j * this.cell_size, 0.8 * this.cell_size);
-      }
-    }
-  }
-}
-
-function grid_flip_pixel(x, y, from_original = false){
-  let i = x + y * W;
-
-  let array_to_use = from_original ? this.initial_array : this.array;
-  if (0 <= i && i < this.array.length){
-    this.array[i] = !array_to_use[i];
-  }
-}
+});
 
 function setup() {
-  createCanvas(1.2 * W, 1.2 * H);
+  cnv = createCanvas(W, H);
+
+  cnv.parent('draggable-rectangle');
+
   angleMode(DEGREES);
   rectMode(CENTER);
   textFont('monospace');
@@ -68,7 +48,8 @@ function setup() {
   noiseX = random(1000);
   noiseY = random(1000);
 
-  grid = make_grid(W, H, 10);
+  cardX = width/2;
+  cardY = height/2;
 
 }
 
@@ -80,39 +61,69 @@ function draw() {
   stroke('white');
   noFill();
 
-  grid.reset();
-  removeCrossSection(width/2, height/2, W, H, noiseParam, grid.cell_size, C)
-  grid.draw()
-  // drawCard(width/2, height/2, W, H, margin, C);
-
-  noiseParam += noiseStep;
+  drawCard(0 + W/2, 0 + H/2, W, H, margin, C);
 
 }
 
 function drawCard(x, y, w, h, margin, c) {
 
+  let d = 5
+
+
+  strokeWeight(2);
   stroke(255*c);
-//   rect(x, y, w + 2*margin, h + 2*margin);
-  // pixelCurve(x, y, w, h, noiseParam, 5, c);
+  rect(x, y, w, h);
+  pixelCurve(x, y, w - 2*margin, h - 2*margin, noiseParam, d, c);
 
-  
+  noiseParam += noiseStep;
 
 
-  // fill('black');
+  // fill(255*(1-c));
   // noStroke();
-  // textSize(110);
-  // textAlign(CENTER, CENTER);
-  // textFont('Pixelify Sans');
-  // text('yon maor', width/2, height/2);
+  // textSize(100);
+  // textAlign(CENTER, CENTER)
+  // text('yon maor', width/2, height/2)
+
+  push()
+  translate(d, height/4)
+  let name = 'yon maor';
+  let curr_x = 0
+  for (let i = 0; i < name.length; i++){
+    let letter = name[i];
+    if (letter == ' '){
+      curr_x += 10*d;
+      continue;
+    }
+    let pixel_letter = pixel_font[letter];
+    let letter_width = pixel_letter.width;
+
+    for (let j = 0; j < pixel_letter.array.length; j++){
+      if (pixel_letter.array[j]){
+        let pixel_x = j % 15;
+        let pixel_y = floor(j / 15);
+
+        fill(255 * int(!c));
+        stroke(255 * int(!c));
+        rect(curr_x + pixel_x * d, pixel_y * d, d);
+      }
+    }
+    curr_x += letter_width*d + 2*d;
+
+  }
+
+  pop()
+
+  // textSize(30)
+  // text('art | engineering | propaganda', width/2, height/2 + 40)
 
 }
 
 function pixelCurve(x, y, w, h, noiseParam, d, c){
   draw_grid(x, y, w, h, d, c);
-  // removeCrossSection(x, y, w, h, noiseParam, d, c);
+  removeCrossSection(x, y, w, h, noiseParam, d, c);
 }
 
-function removeCrossSection(sx, sy, w, h, noiseZ, d, c){
+function removeCrossSection(sx, sy, w, h, noiseZ, d, c){ 
 
   // erase(0, 80);
   push();
@@ -132,10 +143,9 @@ function removeCrossSection(sx, sy, w, h, noiseZ, d, c){
       y = floor(y / d);
 
       if (0 <= x*d && x*d <= w && 0 <= y*d && y*d <= h){
-        // fill(255 * int(!c));
-        // stroke(255 * int(!c));
-
-        grid.flip_pixel(x, y);
+        fill(255 * int(!c));
+        stroke(255 * int(!c));
+        rect(x * d, y * d, d);
       }
 
       // stroke('white');
@@ -148,11 +158,12 @@ function removeCrossSection(sx, sy, w, h, noiseZ, d, c){
   // noErase();
 }
 
-function _draw_grid(sx, sy, w, h, d, c) {
+function draw_grid(sx, sy, w, h, d, c) {
   push();
   translate(sx - w/2, sy - h/2);
 
   noFill();
+  strokeWeight(1);
   stroke(255 * c);
   for (let i = 0; i <= w/d; i++){
     for (let j = 0; j <= h/d; j++){

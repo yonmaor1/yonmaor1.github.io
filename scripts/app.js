@@ -11,8 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById(id).innerHTML = data;
                 // document.getElementById(id).style.display = 'block';
             })
+            .then(() => {
+                if (id == 'top-right') {
+                    createGallery();
+                }
+            })
             .catch(error => console.error('Error fetching content:', error));
-    });
+    })
+
+    
 
     // lines
     const canvas = document.getElementById('canvas');
@@ -108,3 +115,37 @@ window.addEventListener('resize', () => {
 
     draw_lines(canvas.getContext('2d'), card, canvas);
 });
+
+// art page
+function createGallerySection(links, names) {
+    const gallery = document.getElementById('gallery');
+    links.forEach((link, index) => {
+        const item = document.createElement('div');
+        item.classList.add('gallery-item');
+
+        const img = document.createElement('img');
+        img.src = link;
+        img.alt = names[index][0];
+
+        const description = document.createElement('div');
+        description.classList.add('description');
+
+        const title = document.createElement('h2');
+        title.textContent = names[index][0];
+
+        const medium = document.createElement('p');
+        medium.textContent = names[index][1];
+
+        description.appendChild(title);
+        description.appendChild(medium);
+        item.appendChild(img);
+        item.appendChild(description);
+        gallery.appendChild(item);
+    });
+}
+
+function createGallery() {
+    createGallerySection(three_d_links, three_d_names);
+    createGallerySection(two_d_links, two_d_names);
+    createGallerySection(electronic_links, electronic_names);
+}
