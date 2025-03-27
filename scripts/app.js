@@ -3,16 +3,17 @@ let first_time = true;
 document.addEventListener('DOMContentLoaded', () => {
 
     // load content for each corner
-    const ids = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+    const ids = ['desktop-top-left', 'desktop-top-right', 'desktop-bottom-left', 'desktop-bottom-right'];
     ids.forEach(id => {
-        fetch(`pages/${id}.html`)
+        const trimmed_id = id.replace('desktop-', '');
+        fetch(`pages/${trimmed_id}.html`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById(id).innerHTML = data;
                 // document.getElementById(id).style.display = 'block';
             })
             .then(() => {
-                if (id == 'top-right') {
+                if (trimmed_id == 'top-right') {
                     createGallery();
                 }
             })
@@ -77,16 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const threshold = 1; // Distance from corner to trigger navigation
 
         if (x <= threshold && y <= threshold) {
-            load_content('top-left');
+            load_content('desktop-top-left');
             return true;
         } else if (x + card.offsetWidth >= window.innerWidth - threshold && y <= threshold) {
-            load_content('top-right');
+            load_content('desktop-top-right');
             return true;
         } else if (x <= threshold && y + card.offsetHeight>= window.innerHeight - threshold) {
-            load_content('bottom-left');
+            load_content('desktop-bottom-left');
             return true;
         } else if (x + card.offsetWidth >= window.innerWidth - threshold && y + card.offsetHeight >= window.innerHeight - threshold) {
-            load_content('bottom-right');
+            load_content('desktop-bottom-right');
             return true;
         } else {
             clear_content(ids);
@@ -117,8 +118,8 @@ window.addEventListener('resize', () => {
 });
 
 // art page
-function createGallerySection(links, names, title) {
-    const gallery = document.getElementById('gallery');
+function createGallerySection(links, names, title, galleryId) {
+    const gallery = document.getElementById(galleryId);
 
     // Create and append the section header
     const sectionHeader = document.createElement('div');
@@ -151,8 +152,8 @@ function createGallerySection(links, names, title) {
     });
 }
 
-function createGallery() {
-    createGallerySection(two_d_links, two_d_names, '2D work');
-    createGallerySection(three_d_links, three_d_names, '3D work');
-    createGallerySection(electronic_links, electronic_names, 'electronic work');
+function createGallery(galleryId = 'gallery') {
+    createGallerySection(two_d_links, two_d_names, '2D work', galleryId);
+    createGallerySection(three_d_links, three_d_names, '3D work', galleryId);
+    createGallerySection(electronic_links, electronic_names, 'Electronic work', galleryId);
 }

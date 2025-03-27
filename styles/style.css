@@ -91,22 +91,22 @@ h3 {
   margin: 0.5rem;
 }
 
-#top-left {
+#desktop-top-left {
   top: calc(var(--rectangle-height) + 2px);
   left: calc(var(--rectangle-width) + 2px);
 }
 
-#top-right {
+#desktop-top-right {
   top: calc(var(--rectangle-height) + 2px);
   right: calc(var(--rectangle-width) + 2px);
 }
 
-#bottom-left {
+#desktop-bottom-left {
   bottom: calc(var(--rectangle-height) + 2px);
   left: calc(var(--rectangle-width) + 2px);
 }
 
-#bottom-right {
+#desktop-bottom-right {
   bottom: calc(var(--rectangle-height) + 2px);
   right: calc(var(--rectangle-width) + 2px);
 }
