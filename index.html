@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/styles/style.css">
     <link rel="stylesheet" href="/styles/about.css">
     <link rel="stylesheet" href="/styles/art.css">
+    <link rel="stylesheet" href="/styles/mobile.css" media="(max-width: 768px)">
 
     <!--fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,14 +28,66 @@
     <script src="/scripts/app.js"></script>
 </head>
 <body>
-    <canvas id="canvas"></canvas>
-    <div id="draggable-rectangle" class="draggable">
+    <div id="desktop-container">
+        <canvas id="canvas"></canvas>
+        <div id="draggable-rectangle" class="draggable"></div>
+        <div id="content-container">
+            <div class="content hidden" id="top-left"></div>
+            <div class="content hidden" id="top-right"></div>
+            <div class="content hidden" id="bottom-left"></div>
+            <div class="content hidden" id="bottom-right"></div>
+        </div>
     </div>
-    <div id="content-container">
-        <div class="content hidden" id="top-left"></div>
-        <div class="content hidden" id="top-right"></div>
-        <div class="content hidden" id="bottom-left"></div>
-        <div class="content hidden" id="bottom-right"></div>
+
+    <div id="mobile-container" class="hidden">
+        <div id="mobile-content"></div>
+        <div id="mobile-menu">
+            <button data-page="top-left">about</button>
+            <button data-page="top-right">art</button>
+            <button data-page="bottom-left">teaching</button>
+            <button data-page="bottom-right">projects</button>
+        </div>
     </div>
+
+    <script>
+        function updateView() {
+            const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+            if (isMobile) {
+                document.getElementById('desktop-container').classList.add('hidden');
+                document.getElementById('mobile-container').classList.remove('hidden');
+
+                const buttons = document.querySelectorAll('#mobile-menu button');
+                buttons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const page = button.getAttribute('data-page');
+                        fetch(`/pages/${page}.html`)
+                            .then(response => response.text())
+                            .then(data => {
+                                document.getElementById('mobile-content').innerHTML = data;
+                            })
+                            .catch(error => console.error('Error loading page:', error));
+                    });
+                });
+
+                // Load the first page by default
+                fetch('/pages/top-left.html')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('mobile-content').innerHTML = data;
+                    })
+                    .catch(error => console.error('Error loading page:', error));
+            } else {
+                document.getElementById('desktop-container').classList.remove('hidden');
+                document.getElementById('mobile-container').classList.add('hidden');
+            }
+        }
+
+        // Initial check
+        updateView();
+
+        // Update view on resize
+        window.addEventListener('resize', updateView);
+    </script>
 </body>
 </html>
