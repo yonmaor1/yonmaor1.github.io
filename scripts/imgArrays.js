@@ -71,7 +71,7 @@ let electronic_links = [
 ];
 
 let electronic_names = [
-    ['penny space', 'p5 sketch'], 
+    ['$10.89', 'pennies organized via umap'], 
     ['liminal (2024)', 'website'], 
     ['morii (2023)', 'website'],
     ['noisy square', 'p5 sketch'], 
