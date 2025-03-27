@@ -117,8 +117,15 @@ window.addEventListener('resize', () => {
 });
 
 // art page
-function createGallerySection(links, names) {
+function createGallerySection(links, names, title) {
     const gallery = document.getElementById('gallery');
+
+    // Create and append the section header
+    const sectionHeader = document.createElement('div');
+    sectionHeader.textContent = title;
+    sectionHeader.classList.add('gallery-section-header');
+    gallery.appendChild(sectionHeader);
+
     links.forEach((link, index) => {
         const item = document.createElement('div');
         item.classList.add('gallery-item');
@@ -145,7 +152,7 @@ function createGallerySection(links, names) {
 }
 
 function createGallery() {
-    createGallerySection(three_d_links, three_d_names);
-    createGallerySection(two_d_links, two_d_names);
-    createGallerySection(electronic_links, electronic_names);
+    createGallerySection(two_d_links, two_d_names, '2D work');
+    createGallerySection(three_d_links, three_d_names, '3D work');
+    createGallerySection(electronic_links, electronic_names, 'electronic work');
 }

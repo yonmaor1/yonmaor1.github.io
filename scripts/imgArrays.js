@@ -27,8 +27,12 @@ let three_d_names = [
 ];
 
 let two_d_links = [   
-    '/assets/2d/cabinetDoor.PNG', 
+    '/assets/2d/tab-penny.jpg',
+    '/assets/2d/tab-book.jpg',
+    '/assets/2d/tab-spomenik-intaglio.jpg',
+    '/assets/2d/dark-is-the-night.jpg',
     '/assets/2d/twoCabinets.PNG', 
+    // '/assets/2d/cabinetDoor.PNG', 
     '/assets/2d/minimalistKitchen.JPG', 
     '/assets/2d/qqq.PNG', 
     '/assets/2d/theTeacherIs.png', 
@@ -39,8 +43,12 @@ let two_d_links = [
 ];
 
 let two_d_names = [
-    ['cabinetdDoor', 'woodcut'], 
+    ['etched pennies', 'copper penny, asphaltum'],
+    ['tab spomenik', 'digital print, embossed tiny book'],
+    ['tab spomenik', 'copper plate intaglio'],
+    ['dark is the night', 'screen print'],
     ['two cabinets', 'woodcut'], 
+    // ['cabinetdDoor', 'woodcut'], 
     ['minimalist kitchen', 'woodcut'], 
     ['���', 'lithograph'], 
     ['the teacher is ofcourse an artist', 'risograph'], 
@@ -51,6 +59,9 @@ let two_d_names = [
 ];
 
 let electronic_links = [
+    '/assets/electronic/penny-space.jpg', 
+    '/assets/electronic/liminal.gif',
+    '/assets/electronic/morii.gif',
     '/assets/electronic/noisySquare.png', 
     '/assets/electronic/chimes.gif', 
     '/assets/electronic/circuit.png', 
@@ -60,11 +71,14 @@ let electronic_links = [
 ];
 
 let electronic_names = [
-    ['Noisy Square', 'p5 sketch'], 
-    ['Chimes', 'Grasshopper Data Visualization'], 
-    ['Circuit', 'p5 sketch'], 
-    ['Self Portrait', 'p5 Sketch'], 
-    ['Scales', 'Grasshopper Model'],
+    ['penny space', 'p5 sketch'], 
+    ['liminal (2024)', 'website'], 
+    ['morii (2023)', 'website'],
+    ['noisy square', 'p5 sketch'], 
+    ['chimes', 'grasshopper data visualization'], 
+    ['circuit', 'p5 sketch'], 
+    ['self portrait', 'p5 sketch'], 
+    ['scales', 'grasshopper model'],
     ['parametric #1', 'p5 sketch']
 ];
 
