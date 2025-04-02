@@ -31,6 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // make rectangle draggable
     const card = document.getElementById('draggable-rectangle');
+
+    // Center the rectangle initially
+    card.style.left = `${(window.innerWidth - card.offsetWidth) / 2}px`;
+    card.style.top = `${(window.innerHeight - card.offsetHeight) / 2}px`;
+
     draw_lines(ctx, card, canvas);
 
     card.addEventListener('mousedown', on_mouse_down);
