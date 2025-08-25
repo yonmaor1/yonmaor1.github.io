@@ -41,15 +41,32 @@
 
     <div id="mobile-container" class="hidden">
         <div id="mobile-content"></div>
-        <div id="mobile-menu">
+        <!--div id="mobile-menu">
             <button data-page="top-left">about</button>
             <button data-page="top-right">art</button>
             <button data-page="bottom-left">teaching</button>
             <button data-page="bottom-right">projects</button>
+        </div-->
+        <div id="mobile-menu">
+            <button class="mobile-button" data-page="top-left">about</button>
+            <button class="mobile-button hidden" data-page="top-right">art</button>
+            <button class="mobile-button hidden" data-page="bottom-left">teaching</button>
+            <button class="mobile-button hidden" data-page="bottom-right">projects</button> 
         </div>
     </div>
 
     <script>
+        const resetMobileMenu = (mobileNav) => {
+            mobileNav.style.position = '';
+            mobileNav.style.width = '';
+            mobileNav.style.height = '';
+            mobileNav.style.zIndex = '';
+            mobileNav.style.background = '';
+            mobileNav.querySelectorAll('button').forEach((btn, idx) => {
+                if (idx > 0) btn.classList.add('hidden');
+            });
+        };
+
         function updateView() {
             const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
@@ -58,8 +75,32 @@
                 document.getElementById('mobile-container').classList.remove('hidden');
 
                 const buttons = document.querySelectorAll('#mobile-menu button');
+                const mobileNav = document.getElementById('mobile-menu');
+
+                mobileNav.addEventListener('mousedown', () => {
+                    mobileNav.style.position = 'fixed';
+                    // mobileNav.style.top = '0';
+                    // mobileNav.style.left = '0';
+                    mobileNav.style.width = '100vw';
+                    mobileNav.style.height = '100vh';
+                    mobileNav.style.zIndex = '9999';
+                    mobileNav.style.background = '#fff'; // adjust as needed
+
+                    // Show all hidden buttons
+                    mobileNav.querySelectorAll('button.hidden').forEach(btn => {
+                        btn.classList.remove('hidden');
+                    });
+                });
+
+                mobileNav.addEventListener('mouseup', () => {
+                    resetMobileMenu(mobileNav);
+                });
+                mobileNav.addEventListener('mouseleave', () => {
+                    resetMobileMenu(mobileNav);
+                });
+
                 buttons.forEach(button => {
-                    button.addEventListener('click', () => {
+                    button.addEventListener('mouseup', () => {
                         const page = button.getAttribute('data-page');
                         fetch(`/pages/${page}.html`)
                             .then(response => response.text())
@@ -74,6 +115,9 @@
                                         createGallery('mobile-gallery');
                                     }
                                 }
+                            })
+                            .then(() => {
+                                button.classList.add('active');
                             })
                             .catch(error => console.error('Error loading page:', error));
                     });

@@ -19,20 +19,25 @@ body {
 }
 
 #mobile-menu {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* grid-template-columns: 1fr 1fr;
     gap: 1px;
-    background-color: #000;
+    background-color: #000; */
+    /* transition: all 0.3s ease; */
 }
 
 #mobile-menu button {
     background-color: #fff;
-    border: none;
+    border: 1px solid #000000;
     padding: 1rem;
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
     text-align: center;
+    width: 100%;
+    height: calc(50vh / 4);
 }
 
 #mobile-menu button:hover {
@@ -41,4 +46,5 @@ body {
 
 #mobile-menu button:active {
     background-color: #ccc;
+    z-index: 100;
 }
