@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload & Display</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Image Upload & Display</h1>
+        
+        <div class="main-content">
+            <div class="image-section">
+                <div class="image-container">
+                    <img id="displayImage" class="uploaded-image" alt="Uploaded image">
+                </div>
+            </div>
+            
+            <div class="upload-section">
+                <label for="imageInput" class="upload-label">
+                    Choose an image file
+                </label>
+                <input type="file" id="imageInput" accept="image/*" class="file-input">
+                <button id="toggleBtn" class="toggle-btn" disabled>Toggle Image</button>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="brightness">Brightness</label>
+                <input type="range" id="brightness" min="0" max="200" value="100" class="slider">
+            </div>
+            <div class="control-group">
+                <label for="contrast">Contrast</label>
+                <input type="range" id="contrast" min="0" max="200" value="100" class="slider">
+            </div>
+            <div class="control-group">
+                <label for="saturation">Saturation</label>
+                <input type="range" id="saturation" min="0" max="200" value="100" class="slider">
+            </div>
+            <div class="control-buttons">
+                <button class="control-btn">Filter 1</button>
+                <button class="control-btn">Filter 2</button>
+                <button class="control-btn">Reset</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
