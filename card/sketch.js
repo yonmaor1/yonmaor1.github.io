@@ -7,6 +7,7 @@ let W = 505;
 let H = 205;
 let margin = 5;
 let C = 1;
+let D = 5
 
 let cardX, cardY;
 let holdX, holdY;
@@ -18,6 +19,15 @@ let inCorner = false;
 let corner = -1;
 
 let cnv;
+
+function isMobileView() {
+  return window.innerWidth <= 768;
+}
+let isMobile = isMobileView();
+
+window.addEventListener('resize', () => {
+  isMobile = isMobileView();
+});
 
 document.addEventListener('darkModeEnabled', (event) => {
   console.log('Dark mode enabled:', event.detail.enabled);
@@ -36,9 +46,18 @@ document.addEventListener('darkModeDisabled', (event) => {
 });
 
 function setup() {
-  cnv = createCanvas(W, H);
+  if (isMobile){
+    cnv = createCanvas(windowWidth, windowHeight);
+    cnv.parent('mobile-landing');
+    
+    let d_approx = 7
+    let N = floor(width / d_approx);
+    D = width / N;
+  } else {
+    cnv = createCanvas(W, H);
+    cnv.parent('draggable-rectangle');
+  }
 
-  cnv.parent('draggable-rectangle');
 
   angleMode(DEGREES);
   rectMode(CENTER);
@@ -61,19 +80,26 @@ function draw() {
   stroke('white');
   noFill();
 
-  drawCard(0 + W/2, 0 + H/2, W, H, margin, C);
+  drawCard(0 + width/2, 0 + height/2, width, height, margin, D, C);
 
 }
 
-function drawCard(x, y, w, h, margin, c) {
+function drawCard(x, y, w, h, margin, d, c) {
 
-  let d = 5
+  // let d = 5
 
 
-  strokeWeight(2);
-  stroke(255*c);
-  rect(x, y, w, h);
-  pixelCurve(x, y, w - 2*margin, h - 2*margin, noiseParam, d, c);
+  let use_c = c;
+  if (isMobile) {
+    margin = d/2
+    use_c = int(!c)
+  } else {
+    strokeWeight(2);
+    stroke(255*c);
+    rect(x, y, w, h);
+    margin = d
+  }
+  pixelCurve(x, y, w - 2*margin, h - 2*margin, noiseParam, d, use_c);
 
   noiseParam += noiseStep;
 
@@ -84,34 +110,35 @@ function drawCard(x, y, w, h, margin, c) {
   // textAlign(CENTER, CENTER)
   // text('yon maor', width/2, height/2)
 
-  push()
-  translate(d, height/4)
-  let name = 'yon maor';
-  let curr_x = 0
-  for (let i = 0; i < name.length; i++){
-    let letter = name[i];
-    if (letter == ' '){
-      curr_x += 10*d;
-      continue;
-    }
-    let pixel_letter = pixel_font[letter];
-    let letter_width = pixel_letter.width;
-
-    for (let j = 0; j < pixel_letter.array.length; j++){
-      if (pixel_letter.array[j]){
-        let pixel_x = j % 15;
-        let pixel_y = floor(j / 15);
-
-        fill(255 * int(!c));
-        stroke(255 * int(!c));
-        rect(curr_x + pixel_x * d, pixel_y * d, d);
+  if (!isMobile) {
+    push()
+    translate(d, height/4)
+    let name = 'yon maor';
+    let curr_x = 0
+    for (let i = 0; i < name.length; i++){
+      let letter = name[i];
+      if (letter == ' '){
+        curr_x += 10*d;
+        continue;
       }
+      let pixel_letter = pixel_font[letter];
+      let letter_width = pixel_letter.width;
+
+      for (let j = 0; j < pixel_letter.array.length; j++){
+        if (pixel_letter.array[j]){
+          let pixel_x = j % 15;
+          let pixel_y = floor(j / 15);
+
+          fill(255 * int(!c));
+          stroke(255 * int(!c));
+          rect(curr_x + pixel_x * d, pixel_y * d, d);
+        }
+      }
+      curr_x += letter_width*d + 2*d;
+
     }
-    curr_x += letter_width*d + 2*d;
-
+    pop()
   }
-
-  pop()
 
   // textSize(30)
   // text('art | engineering | propaganda', width/2, height/2 + 40)
@@ -162,9 +189,15 @@ function draw_grid(sx, sy, w, h, d, c) {
   push();
   translate(sx - w/2, sy - h/2);
 
-  noFill();
-  strokeWeight(1);
-  stroke(255 * c);
+  if (isMobile) {
+    fill(255 * c);
+    noStroke();
+  } else {
+    noFill();
+    strokeWeight(1);
+    stroke(255 * c);
+
+  }
   for (let i = 0; i <= w/d; i++){
     for (let j = 0; j <= h/d; j++){
       rect(i * d, j * d, d - 4);
