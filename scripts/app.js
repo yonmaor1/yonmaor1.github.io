@@ -18,9 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
             .catch(error => console.error('Error fetching content:', error));
-    })
-
-    
+    });
 
     // lines
     const canvas = document.getElementById('canvas');
