@@ -9,10 +9,14 @@ let frames_since = 0;
 let pixs = new Array(num_blocks ** 3).fill(0);
 
 let cnv;
+let cam;
 
 function setup() {
   cnv = createCanvas(500, 500, WEBGL);
   cnv.parent('canvas')
+  // cam = createCamera();
+  // cam.setPosition(0, 0, (num_blocks * block_size) / (2 * tan(PI * 30.0 / 180.0)));
+  camera(260, -171, 300, 0, 0, 0, 0, 1, 0);
 
   frameRate(15);
 }
