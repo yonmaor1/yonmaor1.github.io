@@ -151,15 +151,24 @@ function updateView() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Initial setup
-    updateView();
-    
-    // Update view on resize
-    window.addEventListener('resize', updateView);
+// Initial setup
+updateView();
 
-    // Mobile Settings
-    $("#mobile-menu").taphold((e) => {
-        e.preventDefault();
-    });
-});
+// Update view on resize
+window.addEventListener('resize', updateView);
+
+// document.addEventListener('DOMContentLoaded', () => {
+
+//     // Mobile Settings
+//     if (window.matchMedia("(max-width: 768px)").matches) {
+//         // Initial setup
+//         updateView();
+
+//         // Update view on resize
+//         window.addEventListener('resize', updateView);
+
+//         $("#mobile-menu").taphold((e) => {
+//             e.preventDefault();
+//         });
+//     }
+// });

@@ -26,11 +26,26 @@
     <script src="/scripts/utils.js"></script>
     <script src="/scripts/imgArrays.js"></script>
     <script src="/scripts/app.js"></script>
+    <script>
+        if (window.matchMedia("(max-width: 768px)").matches) {
+            var script = document.createElement('script');
+            script.src = "/scripts/mobile.js";
+            document.head.appendChild(script);
 
-    <!--jQuery-->
-    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+            var link = document.createElement('link');
+            link.rel = "stylesheet";
+            link.href = "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css";
+            document.head.appendChild(link);
+
+            var jqueryScript = document.createElement('script');
+            jqueryScript.src = "https://code.jquery.com/jquery-1.11.1.min.js";
+            document.head.appendChild(jqueryScript);
+
+            var mobileScript = document.createElement('script');
+            mobileScript.src = "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js";
+            document.head.appendChild(mobileScript);
+        }
+    </script>
 
 </head>
 <body>
@@ -57,7 +72,5 @@
             <button class="mobile-button hidden" data-page="bottom-right">projects</button> 
         </div>
     </div>
-
-    <script src="/scripts/mobile.js"></script>
 </body>
 </html>
