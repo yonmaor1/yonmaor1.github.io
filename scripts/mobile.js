@@ -115,6 +115,7 @@ function updateView() {
                                 if (mobileGallery) {
                                     mobileGallery.id = 'mobile-gallery';
                                     createGallery('mobile-gallery');
+                                    initGalleryToggle('mobile-gallery');
                                 }
                             }
                         })

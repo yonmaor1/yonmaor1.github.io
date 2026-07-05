@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(() => {
                 if (pages[id] == 'gallery') {
                     createGallery();
+                    initGalleryToggle();
                 }
             })
             .catch(error => console.error('Error fetching content:', error));
@@ -128,42 +129,93 @@ window.addEventListener('resize', () => {
 });
 
 // art page
-function createGallerySection(links, names, title, galleryId) {
-    const gallery = document.getElementById(galleryId);
-
-    // Create and append the section header
+function appendGallerySectionHeader(gallery, title) {
     const sectionHeader = document.createElement('div');
     sectionHeader.textContent = title;
     sectionHeader.classList.add('gallery-section-header');
     gallery.appendChild(sectionHeader);
+}
 
-    links.forEach((link, index) => {
-        const item = document.createElement('div');
-        item.classList.add('gallery-item');
+function appendGalleryItem(gallery, piece) {
+    const item = document.createElement('div');
+    item.classList.add('gallery-item');
 
-        const img = document.createElement('img');
-        img.src = link;
-        img.alt = names[index][0];
+    const img = document.createElement('img');
+    img.src = piece.img;
+    img.alt = piece.name;
 
-        const description = document.createElement('div');
-        description.classList.add('description');
+    const description = document.createElement('div');
+    description.classList.add('description');
 
-        const title = document.createElement('h2');
-        title.textContent = names[index][0];
+    const title = document.createElement('h2');
+    title.textContent = piece.name;
 
-        const medium = document.createElement('p');
-        medium.textContent = names[index][1];
+    const medium = document.createElement('p');
+    medium.textContent = piece.medium;
 
-        description.appendChild(title);
-        description.appendChild(medium);
-        item.appendChild(img);
-        item.appendChild(description);
-        gallery.appendChild(item);
+    description.appendChild(title);
+    description.appendChild(medium);
+    item.appendChild(img);
+    item.appendChild(description);
+    gallery.appendChild(item);
+}
+
+// group pieces (preserving order) by a key, returning [key, items] pairs
+function groupPieces(items, keyFn) {
+    const groups = new Map();
+    items.forEach(piece => {
+        const key = keyFn(piece);
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push(piece);
+    });
+    return [...groups.entries()];
+}
+
+function renderGalleryByType(gallery) {
+    Object.keys(categoryLabels).forEach(category => {
+        const items = pieces.filter(piece => piece.category === category);
+        if (items.length === 0) return;
+        appendGallerySectionHeader(gallery, categoryLabels[category]);
+        items.forEach(piece => appendGalleryItem(gallery, piece));
     });
 }
 
-function createGallery(galleryId = 'gallery') {
-    createGallerySection(two_d_links, two_d_names, '2D work', galleryId);
-    createGallerySection(three_d_links, three_d_names, '3D work', galleryId);
-    createGallerySection(electronic_links, electronic_names, 'Electronic work', galleryId);
+function renderGalleryByDate(gallery) {
+    // newest first (full yyyymmdd); grouped by year, undated pieces last
+    const yearOf = date => (date ? Math.floor(date / 10000) : 'undated');
+    const sorted = [...pieces].sort((a, b) => (b.date ?? -Infinity) - (a.date ?? -Infinity));
+    const groups = groupPieces(sorted, piece => yearOf(piece.date));
+    groups.forEach(([year, items]) => {
+        appendGallerySectionHeader(gallery, String(year));
+        items.forEach(piece => appendGalleryItem(gallery, piece));
+    });
+}
+
+function createGallery(galleryId = 'gallery', sortMode = 'date') {
+    const gallery = document.getElementById(galleryId);
+    gallery.innerHTML = '';
+
+    if (sortMode === 'date') {
+        renderGalleryByDate(gallery);
+    } else {
+        renderGalleryByType(gallery);
+    }
+}
+
+// wire up the "sort by" toggle within a given gallery container's page
+function initGalleryToggle(galleryId = 'gallery') {
+    const toggle = document.querySelector(`#${galleryId}`)
+        ?.closest('.gallery-container')
+        ?.querySelector('.gallery-sort');
+    if (!toggle) return;
+
+    toggle.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-sort]');
+        if (!button) return;
+
+        toggle.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        button.classList.add('active');
+
+        createGallery(galleryId, button.dataset.sort);
+    });
 }
