@@ -1,8 +1,8 @@
-// Each piece: { img, name, medium, category, date, link? }
+// Each piece: { img, name, medium, category, date, link?, blurb? }
 //   category: '2d' | '3d' | 'electronic'
 //   date: yyyymmdd
-//   link: optional URL — if set, clicking the piece navigates here instead of
-//         opening the image full-screen
+//   link: optional URL — if set, clicking the piece navigates here instead of lighboxing
+//   blurb: optional text to display by the image's lighbox
 let pieces = [
     // --- 2D work ---
     {
@@ -10,14 +10,16 @@ let pieces = [
         name: 'etched pennies',
         medium: 'copper penny, asphaltum',
         category: '2d',
-        date: 20240514
+        date: 20240514,
+        blurb: 'Standard US Pennies, coated in asphaltum and etched with an axidraw pen plotter'
     },
     {
         img: '/assets/2d/tab-book.jpg',
         name: 'tab spomenik',
         medium: 'digital print, embossed tiny book',
         category: '2d',
-        date: 20231217
+        date: 20231217,
+        blurb: 'A tiny stab-bound book of Yugoslav war memorials (spomeniks), reconstructed from aluminum can pop tabs. The tabs were sculpted, photographed, and edited onto the photographs of the memorial sites. The images were then colorized by hand.'
     },
     {
         img: '/assets/2d/tab-spomenik-intaglio.jpg',

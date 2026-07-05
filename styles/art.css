@@ -96,19 +96,50 @@ h1 {
     position: fixed;
     inset: 0;
     z-index: 10000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     cursor: zoom-out;
 }
 
+.lightbox-frame {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .lightbox img {
-    max-width: 90vw;
-    max-height: 90vh;
+    max-width: 90%;
+    max-height: 90%;
     object-fit: contain;
+}
+
+.lightbox-blurb {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 2rem;
+
+    font-family: "roboto-mono";
+    /* font-weight: 300; */
+    font-style: normal;
+    color: #fff;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    cursor: default;
+}
+
+.lightbox-blurb a {
+    color: #fff;
+    text-decoration: underline;
 }
 
 .gallery-section-header {

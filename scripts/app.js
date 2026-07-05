@@ -163,24 +163,71 @@ function appendGalleryItem(gallery, piece) {
         if (piece.link) {
             window.location.href = piece.link;
         } else {
-            openLightbox(piece);
+            openLightbox(piece, gallery);
         }
     });
 }
 
-// enlarge a piece's image over a blurred backdrop; click anywhere to close
-function openLightbox(piece) {
+// enlarge a piece's image over a blurred backdrop; click anywhere to close.
+// the backdrop blurs the whole page, but the image is centered within the
+// gallery's content column so the empty column beside it stays clear.
+function openLightbox(piece, gallery) {
     const overlay = document.createElement('div');
     overlay.classList.add('lightbox');
+
+    const frame = document.createElement('div');
+    frame.classList.add('lightbox-frame');
+
+    const section = gallery.closest('.content');
+    if (section) {
+        const rect = section.getBoundingClientRect();
+        frame.style.left = `${rect.left}px`;
+        frame.style.width = `${rect.width}px`;
+
+        if (piece.blurb) {
+            const blurb = document.createElement('div');
+            blurb.classList.add('lightbox-blurb');
+            blurb.style.left = `${rect.right}px`;
+            blurb.style.width = `${window.innerWidth - rect.right}px`;
+            appendBlurb(blurb, piece.blurb);
+            overlay.appendChild(blurb);
+        }
+    } else {
+        frame.style.left = '0';
+        frame.style.width = '100%';
+    }
 
     const img = document.createElement('img');
     img.src = piece.img;
     img.alt = piece.name;
 
-    overlay.appendChild(img);
+    frame.appendChild(img);
+    overlay.appendChild(frame);
     document.body.appendChild(overlay);
 
     overlay.addEventListener('click', () => overlay.remove());
+}
+
+// render blurb text into `container`, turning [text](url) into clickable links
+function appendBlurb(container, text) {
+    const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g;
+    let lastIndex = 0;
+    let match;
+    while ((match = linkPattern.exec(text)) !== null) {
+        if (match.index > lastIndex) {
+            container.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+        }
+        const anchor = document.createElement('a');
+        anchor.href = match[2];
+        anchor.textContent = match[1];
+        anchor.target = '_blank';
+        anchor.rel = 'noopener';
+        container.appendChild(anchor);
+        lastIndex = linkPattern.lastIndex;
+    }
+    if (lastIndex < text.length) {
+        container.appendChild(document.createTextNode(text.slice(lastIndex)));
+    }
 }
 
 // group pieces (preserving order) by a key, returning [key, items] pairs
