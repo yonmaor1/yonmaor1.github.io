@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(node --check scripts/imgArrays.js)",
-      "Bash(node --check scripts/app.js)",
-      "Bash(node --check scripts/mobile.js)"
-    ]
-  }
-}

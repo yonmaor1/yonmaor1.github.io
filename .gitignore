@@ -1,2 +1,12 @@
-!*
+# MacOS
 .DS_Store
+
+# IDE
+.vscode
+
+# Node
+node_modules/
+
+# AI
+.claude/
+.claude-session
