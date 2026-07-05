@@ -8,7 +8,6 @@ body {
 
     --mobile-button-height-closed: calc(50vh / 4);
     --mobile-topbar-height: 4rem;
-    --num-buttons: 5;
 }
 
 #mobile-container {
@@ -29,35 +28,48 @@ body {
     display: none !important;
 }
 
-#mobile-menu.open .hidden {
-    display: block !important;
-    position: relative !important;
-    opacity: 1 !important;
-    z-index: 2 !important;
+#mobile-menu.open {
+    top: var(--mobile-topbar-height);
+    z-index: 9999;
 }
 
-#mobile-menu.open {
-    position: fixed !important;
-    top: 4rem;
-    bottom: 0;
-    left: 0;
-    width: 100vw;
-    height: calc(100vh - var(--mobile-topbar-height));
-    background: inherit;
-    z-index: 9999;
+/* each button extends all the way to the bottom; lower buttons stack on top
+   (higher z-index) and hide the overflow, so a hovered tab's fill meets its
+   neighbours with no seam or sub-pixel gap */
+#mobile-menu.open .mobile-button {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: flex-start;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    font-size: 1.2rem;
+    /* top-align the label, then offset by half a slot (minus ~half a line)
+       so it reads as centered within the visible 1/5 strip */
+    padding-top: calc((100vh - var(--mobile-topbar-height)) / 10 - 0.6em);
+    animation: mobile-unravel 300ms ease;
 }
 
-#mobile-menu.open .mobile-button {
-    flex: 1 1 0;
-    height: calc((100vh - var(--mobile-topbar-height)) / var(--num-buttons)) !important;
-    min-height: 0;
-    margin: 0;
-    border-radius: 0;
-    font-size: 1.2rem;
-    display: block !important;
+#mobile-menu.open .mobile-button:nth-child(1) { top: 0;    z-index: 1; }
+#mobile-menu.open .mobile-button:nth-child(2) { top: 20%;  z-index: 2; }
+#mobile-menu.open .mobile-button:nth-child(3) { top: 40%;  z-index: 3; }
+#mobile-menu.open .mobile-button:nth-child(4) { top: 60%;  z-index: 4; }
+#mobile-menu.open .mobile-button:nth-child(5) { top: 80%;  z-index: 5; }
+
+#mobile-menu.open .mobile-button.hover {
+    background: #eee !important;
+}
+
+.dark-mode #mobile-menu.open .mobile-button.hover {
+    background: #333 !important;
+}
+
+@keyframes mobile-unravel {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .dark-mode #mobile-topbar-img {
@@ -106,65 +118,40 @@ body {
 }
 
 #mobile-menu {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    /* margin-top: 0.5rem; */
-    margin-bottom: 0;
+    z-index: 20;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
 
-#mobile-menu button {
-    background-color: #fff;
-    border: 1px solid #000000;
-    padding: 1rem;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    text-align: center;
+#mobile-menu .mobile-button {
+    display: none;
+    box-sizing: border-box;
     width: 100%;
     height: var(--mobile-button-height-closed);
-    transition: all 0.3s ease;
-}
-
-#mobile-menu button:hover {
-    background-color: #fff;
-    border: 1px solid #000000;
     padding: 1rem;
+    background-color: #fff;
+    border: none;
+    border-top: 1px solid #000000;
+    color: #000;
+    font-family: "roboto-mono", sans-serif;
     font-size: 1rem;
     font-weight: bold;
-    cursor: pointer;
     text-align: center;
-    width: 100%;
-    height: calc(50vh / 4);
-    position: relative;
-    z-index: 2;
-    margin-top: 0.5rem;
-    margin-bottom: 0;
+    cursor: pointer;
 }
 
-#mobile-menu:not(.open) .hidden {
-    display: block !important;
-    position: absolute !important;
-    z-index: 1 !important;
-    opacity: 0 !important;
-}
-
-#mobile-menu:not(.open) .mobile-button.active {
-    position: absolute !important;
-    left: 0 !important;
-    bottom: 0 !important;
-    width: 100% !important;
-    z-index: 2 !important;
-    opacity: 1 !important;
-}
-
-#mobile-menu.open .mobile-button.active {
-    position: relative !important;
-    left: unset !important;
-    bottom: unset !important;
-    width: 100% !important;
-    z-index: 2 !important;
-    opacity: 1 !important;
+/* collapsed: only the active button shows, as a flush bottom bar */
+#mobile-menu .mobile-button.active {
+    display: block;
 }
 
 /* Dark mode for mobile child divs */
