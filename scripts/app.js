@@ -158,6 +158,29 @@ function appendGalleryItem(gallery, piece) {
     item.appendChild(img);
     item.appendChild(description);
     gallery.appendChild(item);
+
+    item.addEventListener('click', () => {
+        if (piece.link) {
+            window.location.href = piece.link;
+        } else {
+            openLightbox(piece);
+        }
+    });
+}
+
+// enlarge a piece's image over a blurred backdrop; click anywhere to close
+function openLightbox(piece) {
+    const overlay = document.createElement('div');
+    overlay.classList.add('lightbox');
+
+    const img = document.createElement('img');
+    img.src = piece.img;
+    img.alt = piece.name;
+
+    overlay.appendChild(img);
+    document.body.appendChild(overlay);
+
+    overlay.addEventListener('click', () => overlay.remove());
 }
 
 // group pieces (preserving order) by a key, returning [key, items] pairs

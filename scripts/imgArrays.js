@@ -1,6 +1,8 @@
-// Each piece: { img, name, medium, category, date }
+// Each piece: { img, name, medium, category, date, link? }
 //   category: '2d' | '3d' | 'electronic'
 //   date: yyyymmdd
+//   link: optional URL — if set, clicking the piece navigates here instead of
+//         opening the image full-screen
 let pieces = [
     // --- 2D work ---
     {

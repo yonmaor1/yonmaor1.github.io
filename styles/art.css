@@ -45,6 +45,7 @@ h1 {
     background-color: #fff;
     width: 100%;
     aspect-ratio: 1 / 1; /* Ensures the grid items are square */
+    cursor: pointer;
 }
 
 .gallery-item img {
@@ -89,6 +90,25 @@ h1 {
 .gallery-item .description p {
     font-size: 0.875rem;
     margin: 0.5rem 0 0;
+}
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    cursor: zoom-out;
+}
+
+.lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
 }
 
 .gallery-section-header {
