@@ -1,19 +1,26 @@
 let first_time = true;
 
+const pages = {
+    'top-left': 'about',
+    'top-right': 'gallery',
+    'bottom-left': 'teaching',
+    'bottom-right': 'projects'
+};
+
+const ids = Object.keys(pages).map(id => `desktop-${id}`);
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // load content for each corner
-    const ids = ['desktop-top-left', 'desktop-top-right', 'desktop-bottom-left', 'desktop-bottom-right'];
-    ids.forEach(id => {
-        const trimmed_id = id.replace('desktop-', '');
-        fetch(`pages/${trimmed_id}.html`)
+    Object.keys(pages).forEach(id => {
+        fetch(`pages/${pages[id]}.html`)
             .then(response => response.text())
             .then(data => {
-                document.getElementById(id).innerHTML = data;
+                document.getElementById(`desktop-${id}`).innerHTML = data;
                 // document.getElementById(id).style.display = 'block';
             })
             .then(() => {
-                if (trimmed_id == 'top-right') {
+                if (pages[id] == 'gallery') {
                     createGallery();
                 }
             })

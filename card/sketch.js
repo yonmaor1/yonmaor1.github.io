@@ -38,8 +38,6 @@ document.addEventListener('darkModeEnabled', (event) => {
 });
 
 document.addEventListener('darkModeDisabled', (event) => {
-  console.log('Dark mode disabled:', event.detail.enabled);
-
   if (event.detail.enabled) {
     C = 1;  
   }
