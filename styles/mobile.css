@@ -112,6 +112,10 @@ body {
     border-bottom: 1px solid #fff !important;
 }
 
+#mobile-landing {
+    overflow-y: hidden;
+}
+
 /* Remove card border in mobile landing */
 #mobile-landing > canvas {
     border: none !important;
