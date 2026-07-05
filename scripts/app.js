@@ -1,4 +1,5 @@
 let first_time = true;
+let user_figured_it_out = false;
 
 const pages = {
     'top-left': 'about',
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // make rectangle draggable
     const card = document.getElementById('draggable-rectangle');
 
-    // Center the rectangle initially
+    // center the rectangle initially
     card.style.left = `${(window.innerWidth - card.offsetWidth) / 2}px`;
     card.style.top = `${(window.innerHeight - card.offsetHeight) / 2}px`;
 
@@ -90,23 +91,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (x <= threshold && y <= threshold) {
             load_content('desktop-top-left');
-            return true;
         } else if (x + card.offsetWidth >= window.innerWidth - threshold && y <= threshold) {
             load_content('desktop-top-right');
-            return true;
         } else if (x <= threshold && y + card.offsetHeight>= window.innerHeight - threshold) {
             load_content('desktop-bottom-left');
-            return true;
         } else if (x + card.offsetWidth >= window.innerWidth - threshold && y + card.offsetHeight >= window.innerHeight - threshold) {
             load_content('desktop-bottom-right');
-            return true;
         } else {
             clear_content(ids);
             return false;
         }
+
+        user_figured_it_out = true;
+        hide_flashing_hint()
+        return true
     }
 
     clear_content(ids);
+
+    setTimeout(() => {
+        if (!user_figured_it_out) {
+            show_flashing_hint();
+            user_figured_it_out = true;
+        }
+    }, 10000);
 
 });
 
@@ -127,6 +135,23 @@ window.addEventListener('resize', () => {
 
     draw_lines(canvas.getContext('2d'), card, canvas);
 });
+
+// navigation hint
+let hint_interval;
+function show_flashing_hint() {
+    if (user_figured_it_out) return;
+    const hint = document.getElementById('nav-hint');
+    hint.style.display = 'block';
+    hint_interval = setInterval(() => {
+        hint.classList.toggle('flash');
+    }, 700);
+}
+
+function hide_flashing_hint() {
+    const hint = document.getElementById('nav-hint');
+    hint.style.display = 'none';
+    clearInterval(hint_interval);
+}
 
 // art page
 function appendGallerySectionHeader(gallery, title) {

@@ -3,11 +3,11 @@ let noiseY;
 let noiseParam = 0;
 let noiseStep = 0.1;
 
-let W = 505;
-let H = 205;
-let margin = 5;
+const W = 505;
+const H = 205;
+const margin = 5;
 let C = 1;
-let D = 5
+let D = 5;
 
 let cardX, cardY;
 let holdX, holdY;
