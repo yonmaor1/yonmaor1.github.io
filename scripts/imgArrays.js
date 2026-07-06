@@ -235,12 +235,20 @@ let pieces = [
         medium: 'p5 sketch',
         category: 'electronic',
         date: 20220505
-    }
+    },
+    {
+        img: '/assets/electronic/tixyz.gif',
+        name: 'tixyz',
+        medium: 'interactive p5 sketch',
+        category: 'electronic',
+        date: 20250101,
+        link: 'https://yonmaor.com/tixyz/'
+    },
 ];
 
 // display labels for each category, in the order they should appear when sorting by type
 const categoryLabels = {
-    '2d': '2D work',
-    '3d': '3D work',
-    'electronic': 'Electronic work'
+    '2d': '2D',
+    '3d': '3D',
+    'electronic': 'Electronic'
 };
