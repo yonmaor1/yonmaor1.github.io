@@ -174,6 +174,14 @@ let pieces = [
 
     // --- Electronic work ---
     {
+        img: '/assets/electronic/johnpai.gif',
+        name: 'John Pai Iterations',
+        link: 'yonmaor.com/johnpai',
+        medium: 'Creative Coding Sketch',
+        category: 'electronic',
+        date: 20260922
+    },
+    {
         img: '/assets/electronic/penny-space.jpg',
         name: '$10.89',
         medium: 'pennies organized via umap',
