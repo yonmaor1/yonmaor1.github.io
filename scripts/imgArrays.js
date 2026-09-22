@@ -244,6 +244,14 @@ let pieces = [
         date: 20250101,
         link: 'https://yonmaor.com/tixyz/'
     },
+    {
+        img: '/assets/electronic/johnpai.gif',
+        name: 'John Pai Sculpture',
+        medium: 'p5 sketch',
+        category: 'electronic',
+        date: 20260101,
+        // link: 'https://yonmaor.com/tixyz/'
+    },
 ];
 
 // display labels for each category, in the order they should appear when sorting by type
