@@ -46,6 +46,10 @@ let editing_plane_index = -1;
 
 let plane_rotate_initial_mouse_x = 0
 let plane_rotate_initial_mouse_y = 0
+let plane_rotate_initial_angle_x = 0
+let plane_rotate_initial_angle_y = 0
+let plane_rotate_initial_angle_z = 0
+
 
 function nextIteration() {
   iteration_index = (iteration_index + 1) % iterations.length
@@ -125,6 +129,8 @@ function setupConfigs() {
     //   90, theta, 0,
     //   is_fixed)
   }
+  editing_plane = false
+  editing_plane_index = -1
 }
 
 function mousePressed() {
