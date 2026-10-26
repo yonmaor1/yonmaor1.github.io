@@ -6,6 +6,15 @@
 let pieces = [
     // --- 2D work ---
     {
+        img: '/assets/2d/thr01.png',
+        name: 'Turner Hall Review (Volume 1)',
+        medium: 'Journal',
+        category: '2d',
+        date: 20250401,
+        blurb: "Pittsburgh's leftist art and literature jounral. I founded it in 2023 and led curation and graphic design for issues 1 and 2.",
+        link: 'https://thecmcp.org/TurnerHall/01'
+    },
+    {
         img: '/assets/2d/tab-penny.jpg',
         name: 'etched pennies',
         medium: 'copper penny, asphaltum',
