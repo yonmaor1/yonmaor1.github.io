@@ -183,6 +183,13 @@ let pieces = [
 
     // --- Electronic work ---
     {
+        img: '/assets/electronic/cmcp_website.jpg',
+        name: 'Carnegie Mellon College Progressives',
+        medium: 'Website',
+        date: 20250101,
+        link: 'https://thecmcp.org'
+    },
+    {
         img: '/assets/electronic/penny-space.jpg',
         name: '$10.89',
         medium: 'pennies organized via umap',

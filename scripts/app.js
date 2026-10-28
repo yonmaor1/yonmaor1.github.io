@@ -186,7 +186,7 @@ function appendGalleryItem(gallery, piece) {
 
     item.addEventListener('click', () => {
         if (piece.link) {
-            window.location.href = piece.link;
+            window.open(piece.link, '_blank', 'noopener,noreferrer');
         } else {
             openLightbox(piece, gallery);
         }
